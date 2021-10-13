@@ -9,7 +9,9 @@
 #define FUNCTIONS_H_
 
 int requestDate(int* day,int* month,int* year);
+
 int validateDate(int day, int month);
+
 int isNumberNoSigns(char* string);
 
 int requestNumberPhone(char* string,char* message,char* messageError,int max);
