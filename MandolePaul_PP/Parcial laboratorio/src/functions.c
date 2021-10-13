@@ -11,6 +11,100 @@
 #include <ctype.h>
 #include <conio.h>
 
+int requestDate(int* day,int* month,int* year)
+{
+	int ret=-1;
+	int auxDay;
+	int auxMonth;
+	int auxYear;
+
+	if(day!=NULL && month!=NULL && year!=NULL)
+	{
+		requestNumber(&auxDay, "Ingrese el dia: ", "ERROR.El dia ingresado debe estar entre el rango (1 y 31).\nReingrese dia: ", 1, 31);
+		requestNumber(&auxMonth, "Ingrese el mes: ", "ERROR.El mes ingresado debe estar entre el rango (1 y 12).\nReingrese mes: ", 1, 12);
+		requestNumber(&auxYear, "Ingrese el año: ", "ERROR.El año ingresado debe estar entre el rango (2021 y 2050).\nReingrese año: ",2021,2050);
+		while(validateDate(auxDay, auxMonth)==0)
+		{
+			requestNumber(&auxDay, "ERROR.El dia ingresado no pertenece al mes.\nReingrese dia: ", "ERROR.El dia ingresado debe estar entre el rango (1 y 31).\nReingrese dia: ", 1, 31);
+			requestNumber(&auxMonth, "reingrese el mes: ", "ERROR.El mes ingresado debe estar entre el rango (1 y 12).\nReingrese mes: ", 1, 12);
+			requestNumber(&auxYear, "reingrese el año: ", "ERROR.El año ingresado debe estar entre el rango (2021 y 2050).\nReingrese año: ",2021,2050);
+		}
+		*day=auxDay;
+		*month=auxMonth;
+		*year=auxYear;
+		ret=0;
+	}
+	return ret;
+}
+int validateDate(int day, int month)
+{
+	int ret=-1;
+
+	if(month==4 || month==6 || month==9 || month==11)
+	{
+		if(day>30)
+		{
+			ret=0;
+		}
+	}
+	else
+	{
+		if(month==2)
+		{
+			if(day>28)
+			{
+				ret=0;
+			}
+		}
+	}
+
+	return ret;
+}
+int isNumberNoSigns(char* string)
+{
+	int ret=-1;
+	int i;
+	int len;
+
+	if(string!=NULL)
+	{
+		len=strlen(string);
+
+		for(i=0;i<len;i++)
+		{
+			if(isdigit(string[i])==0)
+			{
+				ret=0;
+				break;
+			}
+		}
+	}
+	return ret;
+}
+int requestNumberPhone(char* string,char* message,char* messageError,int max)
+{
+	int ret=-1;
+	int len;
+	if(string!=NULL && message!=NULL && message!=NULL && max>0)
+	{
+		printf("%s",message);
+		fflush(stdin);
+		scanf("%[^\n]",string);
+		len=strlen(string);
+		while(!isNumberNoSigns(string) || len!=max)
+		{
+			printf("%s",messageError);
+			fflush(stdin);
+			scanf("%[^\n]",string);
+			len=strlen(string);
+		}
+
+		ret=0;
+	}
+	return ret;
+}
+
+
 int upperFirstLetter(char* string)
 {
 	int ret=-1;
@@ -66,7 +160,6 @@ int validateSigns(char* string)
 
 			if(string[i] < 97 || string[i] > 122)
 			{
-
 				ret=0;
 				break;
 			}
@@ -84,7 +177,7 @@ int requestNameOrLastName(char* string,char* message,char* messageError,int max)
 		fflush(stdin);
 		scanf("%[^\n]",chainAux);
 
-		while(strlen(chainAux)>max || isNumber(chainAux)==-1 || validateSigns(chainAux)==0)
+		while(strlen(chainAux)>max || isNumberWhitSigns(chainAux)==-1 || validateSigns(chainAux)==0)
 		{
 			printf("%s",messageError);
 			fflush(stdin);
@@ -98,7 +191,7 @@ int requestNameOrLastName(char* string,char* message,char* messageError,int max)
 	return ret;
 }
 
-int isNumber(char* string)
+int isNumberWhitSigns(char* string)
 {
 	int ret=-1;
 	int i;
@@ -156,7 +249,7 @@ int requestNumber(int* num,char* message,char* messageError,int min, int max)
 		numIntAux=atoi(numAux);
 
 
-		while((!isNumber(numAux) && !validateSpace(message)) || (numIntAux>max||numIntAux<min))
+		while((!isNumberWhitSigns(numAux) && !validateSpace(message)) || (numIntAux>max||numIntAux<min))
 		{
 			printf("%s",messageError);
 			fflush(stdin);
@@ -165,7 +258,6 @@ int requestNumber(int* num,char* message,char* messageError,int min, int max)
 		}
 
 		*num=atoi(numAux);
-
 
 		returned=0;
 	}
@@ -211,7 +303,7 @@ int requestNumberFloat(float* num, char* message,char* messageError,int min,int 
 		fflush(stdin);
 		scanf("%[^\n]",numAux);
 		numFloatAux=atof(numAux);
-		while((!isNumber(numAux) && !validateSpace(message)) || (numFloatAux<min ||numFloatAux>max))
+		while((!isNumberWhitSigns(numAux) && !validateSpace(message)) || (numFloatAux<min ||numFloatAux>max))
 		{
 			printf("%s",messageError);
 			fflush(stdin);

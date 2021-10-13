@@ -8,6 +8,11 @@
 #ifndef FUNCTIONS_H_
 #define FUNCTIONS_H_
 
+int requestDate(int* day,int* month,int* year);
+int validateDate(int day, int month);
+int isNumberNoSigns(char* string);
+
+int requestNumberPhone(char* string,char* message,char* messageError,int max);
 
 /**
  * @fn int systemPause(char*)
@@ -24,7 +29,7 @@ int systemPause(char* message);
  * @param string receives a string pointer/ recibe un puntero de cadena de caracteres
  * @return returns -1 if the string is numbers 0 if it has letters / devuelve -1 si la cadena son números 0 si tiene letras
  */
-int isNumber(char* string);
+int isNumberWhitSigns(char* string);
 
 /**
  * @fn int validateSpace(char*)

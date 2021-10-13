@@ -17,10 +17,11 @@ typedef struct
 	int vacio;
 }ePerro;
 
-int perro_inicializarPerros(ePerro* perro,int tam);
-int perro_buscarIndicelibre(ePerro* perro,int tam, int* indiceVacio);
-int perro_agregarPerro(ePerro* perro,int tam);
+
+
 int perro_buscarPerroCargado(ePerro* perro,int tam,int* indice,int idPerro);
 int perro_ListarPerros(ePerro* perro,int tam);
 void perro_ListarPerro(ePerro perro);
+int perro_ListarPromedioEdadPerros(ePerro* perro,int tam);
+
 #endif /* PERROS_H_ */

@@ -15,25 +15,20 @@
 #include <conio.h>
 #include "nexo.h"
 #define TAMESTADIAS 5
-#define TAMPERROS 5
+#define TAMPERROS 3
 
 int main(void) {
 	setbuf(stdout,NULL);
-	eEstadia estadia[TAMESTADIAS];
+	eEstadia estadia[TAMESTADIAS]={{100000,"Paul","1540412028",7000,{25,7,2021},OCUPADO},{100001,"Alberto","1531474188",7001,{12,10,2021},OCUPADO},{100002,"Juan","1553353539",7002,{9,1,2022},OCUPADO}};
 	ePerro perro[TAMPERROS]={{7000,"Lobo","Sharpie",2,OCUPADO},{7001,"Sheila","Golden",12,OCUPADO},{7002,"Reina","Galgo",13,OCUPADO}};
 	int opcion;
-	int ultimoId=100000;
-	int contEstadias=0;
+	int ultimoId=100003;
+	int contEstadias=3;
 
 	if(estadia_inicializarEstadiaLibre(estadia, TAMESTADIAS))
 	{
 		printf("ERROR.En el tamaño o el puntero a estadia.\n");
 	}
-	if(perro_inicializarPerros(perro, TAMPERROS))
-	{
-		printf("ERROR.En el tamaño o el puntero a perros.\n");
-	}
-
 	do
 	{
 
@@ -61,17 +56,54 @@ int main(void) {
 				switch(opcion)
 				{
 					case 1:
-						if(estadia_reservarEstadiaConPerroCargado(estadia, TAMESTADIAS, perro, TAMPERROS, &ultimoId))
+						if(estadia_reservarEstadiaConPerroCargado(estadia, TAMESTADIAS, perro, TAMPERROS, &ultimoId, &contEstadias))
 						{
 							printf("ERROR.En el puntero a estadia,perro o tamanios del array menor a 0.\n");
 						}
 						systemPause("Pulse una tecla para continuar.....");
 						break;
 					case 2:
+						if(contEstadias>0)
+						{
+							if(estadia_modificarEstadiaDePerro(estadia, TAMESTADIAS, perro, TAMPERROS))
+							{
+								printf("ERROR.En el puntero a estadia,perro o tamanios del array menor a 0.\n");
+							}
+						}
+						else
+						{
+							printf("\nDebe cargar una estadia antes de poder Modificar.\n");
+						}
+						systemPause("Pulse una tecla para continuar.....");
 						break;
 					case 3:
+						if(contEstadias>0)
+						{
+							if(estadia_eliminarEstadiaDePerro(estadia, TAMESTADIAS, perro, TAMPERROS, &contEstadias))
+							{
+								printf("ERROR.En el puntero a estadia,perro o tamanios del array menor a 0.\n");
+							}
+						}
+						else
+						{
+							printf("\nDebe cargar una estadia antes de poder eliminar.\n");
+						}
+						systemPause("Pulse una tecla para continuar.....");
 						break;
 					case 4:
+						if(contEstadias>0)
+						{
+							estadia_ordenarPorfecha(estadia, TAMESTADIAS);
+							if(estadia_listarEstadiasConPerros(estadia, TAMESTADIAS, perro, TAMPERROS))
+							{
+								printf("ERROR.En el puntero a perro , estadia o tamanio de los array menor a 0.\n");
+							}
+						}
+						else
+						{
+							printf("\nDebe cargar una estadia antes de poder mostrar.\n");
+						}
+						systemPause("Pulse una tecla para continuar.....");
 						break;
 					case 5:
 						if(perro_ListarPerros(perro, TAMPERROS))
@@ -81,8 +113,14 @@ int main(void) {
 						systemPause("Pulse una tecla para continuar.....");
 						break;
 					case 6:
+						if(perro_ListarPromedioEdadPerros(perro, TAMPERROS))
+						{
+							printf("ERROR.En el puntero a perro o tamanio del array menor a 0.\n");
+						}
+						systemPause("Pulse una tecla para continuar.....");
 						break;
 					case 7:
+						printf("\nGracias por usar el organiza estadiadoreitor 9000!!.\n");
 						break;
 				}
 
