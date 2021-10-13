@@ -14,16 +14,16 @@
 #include <ctype.h>
 #include <conio.h>
 #include "nexo.h"
-#define TAMESTADIAS 5
+#define TAMESTADIAS 100
 #define TAMPERROS 3
 
 int main(void) {
 	setbuf(stdout,NULL);
-	eEstadia estadia[TAMESTADIAS]={{100000,"Paul","1540412028",7000,{25,7,2021},OCUPADO},{100001,"Alberto","1531474188",7001,{12,10,2021},OCUPADO},{100002,"Juan","1553353539",7002,{9,1,2022},OCUPADO}};
+	eEstadia estadia[TAMESTADIAS];
 	ePerro perro[TAMPERROS]={{7000,"Lobo","Sharpie",2,OCUPADO},{7001,"Sheila","Golden",12,OCUPADO},{7002,"Reina","Galgo",13,OCUPADO}};
 	int opcion;
-	int ultimoId=100003;
-	int contEstadias=3;
+	int ultimoId=100000;
+	int contEstadias=0;
 
 	if(estadia_inicializarEstadiaLibre(estadia, TAMESTADIAS))
 	{

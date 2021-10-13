@@ -125,7 +125,7 @@ int estadia_inicializarEstadiaLibre(eEstadia* estadia,int tam)
 	int i;
 	if(estadia!=NULL && tam>0)
 	{
-		for(i=3;i<tam;i++)
+		for(i=0;i<tam;i++)
 		{
 			estadia[i].vacio=LIBRE;
 		}
