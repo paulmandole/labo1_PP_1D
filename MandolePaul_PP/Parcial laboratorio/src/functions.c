@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <conio.h>
 
+
 int requestDate(int* day,int* month,int* year)
 {
 	int ret=-1;

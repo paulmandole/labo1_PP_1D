@@ -12,69 +12,66 @@
 #include <conio.h>
 #include "nexo.h"
 
+void estadia_swapEstadias(eEstadia* estadia,int tamEstadia,int i)
+{
+	eEstadia auxEstadia;
+
+	auxEstadia=estadia[i];
+	estadia[i]=estadia[i+1];
+	estadia[i+1]=auxEstadia;
+}
 
 int estadia_ordenarPorfecha(eEstadia* estadia,int tamEstadia)
 {
 	int ret=-1;
 	int i;
-	int j;
-	eEstadia auxEstadia;
+	int flagSwap;
+	int newLimite;
 
 	if(estadia!=NULL && tamEstadia>0)
 	{
-			for(i=0;i<tamEstadia-1;i++)
+		newLimite=tamEstadia;
+		do
+		{
+			flagSwap=0;
+			for(i=0;i<newLimite;i++)
 			{
-				for(j=i+1;j<tamEstadia;j++)
+				if(estadia[i].vacio==OCUPADO && estadia[i+1].vacio==OCUPADO)
 				{
-					if(estadia[i].vacio==OCUPADO && estadia[j].vacio==OCUPADO)
+					if(estadia[i].fecha.anio<estadia[i+1].fecha.anio)
 					{
-						if(estadia[i].fecha.anio<estadia[j].fecha.anio)
+						estadia_swapEstadias(estadia, tamEstadia, i);
+						flagSwap=1;
+					}
+					else if(estadia[i].fecha.anio==estadia[i+1].fecha.anio)
+					{
+						if(estadia[i].fecha.mes<estadia[i+1].fecha.mes)
 						{
-							auxEstadia=estadia[i];
-							estadia[i]=estadia[j];
-							estadia[j]=auxEstadia;
+								estadia_swapEstadias(estadia, tamEstadia, i);
+								flagSwap=1;
 						}
-						else
+						else if(estadia[i].fecha.mes==estadia[i+1].fecha.mes)
 						{
-							if(estadia[i].fecha.anio==estadia[j].fecha.anio)
+							if(estadia[i].fecha.dia<estadia[i+1].fecha.dia)
 							{
-								if(estadia[i].fecha.mes<estadia[j].fecha.mes)
+								estadia_swapEstadias(estadia, tamEstadia, i);
+								flagSwap=1;
+							}
+							else if(estadia[i].fecha.dia==estadia[i+1].fecha.dia)
+							{
+								if(strcmp(estadia[i].nombreDuenio,estadia[i+1].nombreDuenio)==1)
 								{
-									auxEstadia=estadia[i];
-									estadia[i]=estadia[j];
-									estadia[j]=auxEstadia;
-								}
-								else
-								{
-									if(estadia[i].fecha.mes==estadia[j].fecha.mes)
-									{
-										if(estadia[i].fecha.dia<estadia[j].fecha.dia)
-										{
-											auxEstadia=estadia[i];
-											estadia[i]=estadia[j];
-											estadia[j]=auxEstadia;
-										}
-										else
-										{
-											if(estadia[i].fecha.dia==estadia[j].fecha.dia)
-											{
-												if(strcmp(estadia[i].nombreDuenio,estadia[j].nombreDuenio)==1)
-												{
-													auxEstadia=estadia[i];
-													estadia[i]=estadia[j];
-													estadia[j]=auxEstadia;
-												}
-											}
-										}
-									}
+									estadia_swapEstadias(estadia, tamEstadia, i);
+									flagSwap=1;
 								}
 							}
-
 						}
 					}
 				}
 			}
 
+			newLimite--;
+		}while(flagSwap);
 		ret=0;
 	}
 	return ret;

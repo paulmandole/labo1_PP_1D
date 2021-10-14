@@ -28,7 +28,15 @@ typedef struct
 	int vacio;
 
 }eEstadia;
-
+/**
+ * @fn void estadia_swapEstadias(eEstadia*, int, int)
+ * @brief swapea una estructura a un axiliar de estructura
+ *
+ * @param estadia recive el array de estadias
+ * @param tamEstadia recive el tam del array de estadias
+ * @param i recive el indice de la estadias a swap
+ */
+void estadia_swapEstadias(eEstadia* estadia,int tamEstadia,int i);
 /**
  * @fn int estadia_inicializarEstadiaLibre(eEstadia*, int)
  * @brief inicializa el array de estadias en vacio
